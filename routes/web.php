@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\PaysController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,11 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/   ', function () {
     return view('welcome');
 });
 
-Route::get('/pays', [PaysController::class, 'index']);
+Route::get('/pays', [PaysController::class, 'index'])->name('ListePays');
+Route::get('/pays/create', [PaysController::class, 'create'])->name('CreerPays')->middleware(['auth']);
+Route::post('/pays/store', [PaysController::class, 'store'])->name('AjoutPays');
+Route::get('/pays/delete/{pays}', [PaysController::class, 'destroy'])->name('SupprimerPays');
+
+Route::get('entreprise/index', [EntrepriseController::class, 'index'])->name('ListeEntreprise');
+Route::get('entreprise/create', [EntrepriseController::class, 'create'])->name('CreerEntreprise');
+Route::post('entreprise/store', [EntrepriseController::class, 'store'])->name('AjouterEntreprise');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

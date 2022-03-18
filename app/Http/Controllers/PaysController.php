@@ -26,7 +26,7 @@ class PaysController extends Controller
      */
     public function create()
     {
-        //
+        return view('pays.add');
     }
 
     /**
@@ -37,7 +37,11 @@ class PaysController extends Controller
      */
     public function store(StorePaysRequest $request)
     {
-        //
+        $pays = new Pays();
+        $pays->nom = $request->nom;
+        $pays->indicatif = $request->indicatif;
+        $pays->save();
+        return redirect()->route('ListePays');
     }
 
     /**
@@ -71,17 +75,28 @@ class PaysController extends Controller
      */
     public function update(UpdatePaysRequest $request, Pays $pays)
     {
-        //
+        $pays = Pays::find(1);
+        $pays->nom = $request->nom;
+        $pays->indicatif = $request->indicatif;
+        $pays->save();
     }
 
+//    public function delete($id)
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Pays  $pays
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pays $pays)
+    public function destroy($pays)
     {
-        //
+        $pays = Pays::find($pays);
+        $pays->delete();
+        return redirect()->route('ListePays');
     }
+//    {
+//        $pays = Pays::find($id);
+//        dd($pays);
+//    }
+
 }
